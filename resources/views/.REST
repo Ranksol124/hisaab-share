@@ -1,0 +1,26 @@
+# POST http://localhost:8000/api/auth/login
+# # Authorization: Bearer ??? token here
+# Content-Type: application/json
+
+# {
+#     "email":"ranksoltoolsdrive@gmail.com",
+#     "password":"Pa$$w0rd!"
+# }
+
+
+# POST http://localhost:8000/api/resend-verification
+# Content-Type: application/json
+
+# {
+#     "email": "@gmail.com"
+# }
+
+# POST http://localhost:8000/api/register
+# Content-Type: application/json
+
+# {
+#     "email": "@gmail.com",
+#     "name": "wad",
+#     "password": "Pa$$w0rd!",
+#     "password_confirmation": "Pa$$w0rd!"
+# }
