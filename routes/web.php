@@ -6,15 +6,44 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
+
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
 
-Route::middleware(['auth', 'signed'])->get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/admin');
+Route::get('/email/verify/{id}/{hash}', function (Request $request) {
+    $user = User::findOrFail($request->route('id'));
+
+
+    if (!$request->hasValidSignature()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid or expired verification link.',
+        ], 403);
+    }
+
+
+    if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid verification hash.',
+        ], 403);
+    }
+
+
+    if (!$user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Your email has been verified successfully.',
+    ]);
 })->name('verification.verify');
 
 Route::post('/admin/email-verification/resend', function () {
