@@ -40,11 +40,12 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request) {
         event(new Verified($user));
     }
 
-    return response()->json([
-        'status' => 'success',
+    return view('emails.verified', [
+        'user' => $user,
         'message' => 'Your email has been verified successfully.',
     ]);
 })->name('verification.verify');
+
 
 Route::post('/admin/email-verification/resend', function () {
     $user = Auth::user();
