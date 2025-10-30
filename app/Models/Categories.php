@@ -17,10 +17,13 @@ class Categories extends Model
         'color',
         'created_at',
         'icon',
+        'user_id',
         'iconFontFamily',
         'iconFontPackage',
         'name',
         'title',
+        'position',
+        'isDefault',
     ];
 
 

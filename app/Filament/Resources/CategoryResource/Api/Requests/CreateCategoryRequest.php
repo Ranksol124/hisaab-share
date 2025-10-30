@@ -22,13 +22,17 @@ class CreateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'categorytID' => 'required',
+			'categorytID' => 'nullable',
 			'color' => 'required',
+            'user_id'=>'required',
 			'icon' => 'required',
-			'iconFontFamily' => 'required',
-			'iconFontPackage' => 'required',
-			'name' => 'required',
-			'title' => 'required'
+			'iconFontFamily' => 'nullable',
+			'iconFontPackage' => 'nullable',
+            'bgColor' => 'required',
+			'name' => 'nullable',
+			'title' => 'required',
+            'position'=>'required',
+            'isDefault' => 'required',
 		];
     }
 }

@@ -9,7 +9,9 @@ class ApiPrivateAccess
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($request->bearerToken() !== '12345678') {
+
+        $header = $request->header('x-api-key');
+        if ($header !== '12345678') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

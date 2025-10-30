@@ -22,13 +22,17 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'categorytID' => 'required',
-			'color' => 'required',
-			'icon' => 'required',
-			'iconFontFamily' => 'required',
-			'iconFontPackage' => 'required',
-			'name' => 'required',
-			'title' => 'required'
-		];
+            'categorytID' => 'nullable',
+            'color' => 'required',
+            'user_id' => 'required',
+            'icon' => 'required',
+            'iconFontFamily' => 'nullable',
+            'iconFontPackage' => 'nullable',
+            'name' => 'nullable',
+            'title' => 'required',
+            'position' => 'required',
+            'isDefault' => 'required',
+
+        ];
     }
 }
